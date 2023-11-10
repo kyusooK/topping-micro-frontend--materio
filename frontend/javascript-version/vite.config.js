@@ -1,4 +1,3 @@
-forEach: Model
 fileName: vite.config.js
 ---
 import vue from '@vitejs/plugin-vue'
