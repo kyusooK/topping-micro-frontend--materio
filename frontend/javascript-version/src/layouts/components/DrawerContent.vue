@@ -1,4 +1,3 @@
-forEach: Model
 fileName: DrawerContent.vue
 ---
 <template>
