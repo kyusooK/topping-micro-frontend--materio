@@ -1,4 +1,3 @@
-path: {{boundedContext.name}}/frontend/javascript-version/src/layouts/components
 forEach: Model
 fileName: DrawerContent.vue
 ---
