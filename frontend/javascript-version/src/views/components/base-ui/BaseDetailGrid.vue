@@ -1,6 +1,4 @@
-path: {{boundedContext.name}}/frontend/javascript-version/src/views/components/base-ui
 forEach: Model
-fileName: BaseDetailGrid.vue
 ---
 <template>
     <div></div>
