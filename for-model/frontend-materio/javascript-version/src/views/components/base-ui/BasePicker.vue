@@ -1,3 +1,6 @@
+forEach: Model
+fileName: BasePicker.vue
+---
 <template>
     <div>
         <v-combobox

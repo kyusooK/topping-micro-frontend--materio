@@ -1,3 +1,6 @@
+forEach: Model
+fileName: BaseEntity.vue
+---
 <template>
     <div></div>
 </template>
