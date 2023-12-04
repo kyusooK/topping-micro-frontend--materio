@@ -1,5 +1,3 @@
-forEach: Model
----
 <template>
 </template>
 
