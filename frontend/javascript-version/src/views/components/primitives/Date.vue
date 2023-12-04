@@ -1,6 +1,3 @@
-forEach: Model
-fileName: Date.vue
----
 <template>
     <div>
         <div v-if="editMode">

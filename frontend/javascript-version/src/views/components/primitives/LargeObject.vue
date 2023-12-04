@@ -1,6 +1,3 @@
-forEach: Model
-fileName: LargeObject.vue
----
 <template>
     <div>
         <div v-if="editMode" style="margin-top:-20px;">

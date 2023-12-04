@@ -1,38 +1,38 @@
-forEach: Model
-fileName: Number.vue
----
 <template>
     <div>
-        <div v-if="editMode">
+        <div v-if="editMode" style="margin-top:5px;">
             <div class="label-title">\{{label}}</div>
-            <v-text-field
+            <v-switch
                 v-bind="$attrs"
-                type="number"
-                label="숫자를 입력하세요."
                 v-model="value"
+                hide-details
+                inset
                 @change="change"
-            />
+                label="입력하세요."
+            >
+            </v-switch>
         </div>
         <div v-else>
-            \{{value}}
+            \{{label}} :  \{{value}}
         </div>
     </div>
 </template>
-
 <script>
     export default {
-        name: 'Number',
+        name: 'Boolean',
+        components:{
+        },
         props: {
             modelValue:{
-                type: Number,
-                default: 0
+                type: Boolean,
+                default: false
             },
             editMode: Boolean,
             label: String,
         },
         methods:{
             change(){
-                this.$emit("update:modelValue", Number(this.value));
+                this.$emit("update:modelValue", this.value);
             }
         }
     }
