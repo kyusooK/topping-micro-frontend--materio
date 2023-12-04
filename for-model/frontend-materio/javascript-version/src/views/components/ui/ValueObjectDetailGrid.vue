@@ -27,7 +27,7 @@ fileName: {{namePascalCase}}DetailGrid.vue
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(detailVal, idx) in selectedRow.salesItem" :key="detailVal" >
+                    <tr v-for="(detailVal, idx) in selectedRow.{{nameCamelCase}}s" :key="detailVal" >
                         <td class="font-semibold">\{{ idx + 1 }}</td>
                         {{#fieldDescriptors}}
                         {{#if (isNotId nameCamelCase)}}
@@ -96,13 +96,12 @@ fileName: {{namePascalCase}}DetailGrid.vue
 import BaseDetailGrid from '../base-ui/BaseDetailGrid.vue';
 {{#fieldDescriptors}}
 {{#if (isNotId nameCamelCase)}}
-{{#if (isPrimitive className)}}
+{{#if (isPrimitiveImport className)}}
 {{#if (isStringType (getPrimitiveType className))}}
 {{else}}
 import {{getPrimitiveType className}} from '../primitives/{{getPrimitiveType className}}.vue'
 {{/if}}
 {{else}}
-import {{namePascalCase}} from '../{{namePascalCase}}.vue'
 {{/if}}
 {{/if}}
 {{/fieldDescriptors}}
@@ -113,13 +112,12 @@ export default {
     components: {
         {{#fieldDescriptors}}
         {{#if (isNotId nameCamelCase)}}
-        {{#if (isPrimitive className)}}
+        {{#if (isPrimitiveComponent className)}}
         {{#if (isStringType (getPrimitiveType className))}}
         {{else}}
         {{getPrimitiveType className}},
         {{/if}}
         {{else}}
-        {{namePascalCase}},
         {{/if}}
         {{/if}}
         {{/fieldDescriptors}}
@@ -139,6 +137,9 @@ export default {
 </script>
 
 <function>
+    var importList = []
+    var componentList = []
+
     window.$HandleBars.registerHelper('ifNotNull', function (displayName, name) {
         if(displayName){
 	        return displayName;
@@ -183,9 +184,35 @@ export default {
             return false;
         }
     })
+    window.$HandleBars.registerHelper('isPrimitiveImport', function (className) {
+        if(!importList.includes(className)){
+            importList.push(className)
+            if(className.includes("String") || className.includes("Integer") || className.includes("Long") || className.includes("Double") || className.includes("Float")
+                || className.includes("Boolean") || className.includes("Date")){
+                return true;
+            } else {
+                return false;
+            }
+        }else{
+            return false;
+        }
+    })
+    window.$HandleBars.registerHelper('isPrimitiveComponent', function (className) {
+        if(!componentList.includes(className)){
+            componentList.push(className)
+            if(className.includes("String") || className.includes("Integer") || className.includes("Long") || className.includes("Double") || className.includes("Float")
+                || className.includes("Boolean") || className.includes("Date")){
+                return true;
+            } else {
+                return false;
+            }
+        }else{
+            return false;
+        }
+    })
     window.$HandleBars.registerHelper('getNameCamelCase', function (nameCamelCase) {
         if(nameCamelCase){
-            var tdVal = '{{ val.' + nameCamelCase + ' }}'
+            var tdVal = '{{ detailVal.' + nameCamelCase + ' }}'
             return tdVal
         }
     })

@@ -17,7 +17,6 @@ fileName: {{namePascalCase}}Grid.vue
     </v-col>
     <v-col :cols="10">
         <v-row>
-            <!-- <UserProfile style="right: 2px;"/> -->
         </v-row>
         <div style="max-height:80vh; margin-top: 90px;">
             <div class="panel">
@@ -44,6 +43,9 @@ fileName: {{namePascalCase}}Grid.vue
                     {{/isRestRepository}}
                     {{/commands}}
                 </div>
+                {{#attached 'View' this}}
+                <{{namePascalCase}} @search="search" style="margin-bottom: 10px; background-color: #ffffff;"></{{namePascalCase}}>
+                {{/attached}}
                 <div class="mb-5 text-lg font-bold"></div>
                 <div class="table-responsive">
                     <v-table>
@@ -167,7 +169,6 @@ import { ref } from 'vue';
 import { useTheme } from 'vuetify';
 import DrawerContent from '../../../layouts/components/DrawerContent.vue';
 import BaseGrid from '../base-ui/BaseGrid.vue'
-
 import {{namePascalCase}} from '../{{namePascalCase}}.vue'
 {{#aggregateRoot.fieldDescriptors}}
 {{#unless isKey}}
@@ -182,7 +183,7 @@ import {{className}} from '../vo/{{className}}.vue'
 {{/aggregateRoot.fieldDescriptors}}
 {{#outgoingRelations}}
 {{#target}}
-import {{nameCamelCase}}Id from '../{{nameCamelCase}}Id.vue'
+import {{namePascalCase}}Id from '../{{namePascalCase}}Id.vue'
 {{/target}}
 {{/outgoingRelations}}
 {{#aggregateRoot.fieldDescriptors}}
@@ -190,7 +191,9 @@ import {{nameCamelCase}}Id from '../{{nameCamelCase}}Id.vue'
 import {{getEntityFromList className}}DetailGrid from './{{getEntityFromList className}}DetailGrid.vue'
 {{/if}}
 {{/aggregateRoot.fieldDescriptors}}
-
+{{#attached 'View' this}}
+import {{namePascalCase}} from '../{{namePascalCase}}.vue'
+{{/attached}}
 
 export default {
     name: '{{nameCamelCase}}Grid',
@@ -211,7 +214,7 @@ export default {
         {{/aggregateRoot.fieldDescriptors}}
         {{#outgoingRelations}}
         {{#target}}
-        {{nameCamelCase}}Id,
+        {{namePascalCase}}Id,
         {{/target}}
         {{/outgoingRelations}}
         {{#aggregateRoot.fieldDescriptors}}
@@ -219,6 +222,9 @@ export default {
         {{getEntityFromList className}}DetailGrid,
         {{/if}}
         {{/aggregateRoot.fieldDescriptors}}
+        {{#attached 'View' this}}
+        {{namePascalCase}},
+        {{/attached}}
     },
     data: () => ({
         path: '{{namePlural}}',

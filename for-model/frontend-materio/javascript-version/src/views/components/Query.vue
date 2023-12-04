@@ -8,7 +8,7 @@ except: {{#ifEquals dataProjection "query-for-aggregate"}}false{{else}}true{{/if
             {{#ifNotNull displayName namePascalCase}}{{/ifNotNull}}
         </v-card-title>
     
-        <v-card-text style="margin-top:-30px;">
+        <v-card-text style="margin-top:-10px;">
             <v-row no-gutters style="margin: 15px 0px -10px -15px;">
                 {{#queryParameters}}
                 {{#if (isPrimitive className)}}
@@ -50,15 +50,12 @@ except: {{#ifEquals dataProjection "query-for-aggregate"}}false{{else}}true{{/if
 
 <script>
 {{#queryParameters}}
-{{#if (isPrimitive className)}}
+{{#if (isPrimitiveImport className)}}
 import {{getPrimitiveType className}} from './primitives/{{getPrimitiveType className}}.vue'
 {{else}}
 {{#checkVO className}}
 import {{className}} from './vo/{{className}}.vue'
 {{/checkVO}}
-{{#checkEntityMember className}}
-import {{className}} from './{{className}}.vue'
-{{/checkEntityMember}}
 {{#checkListOfEntityMember className}}
 {{/checkListOfEntityMember}}
 {{/if}}
@@ -67,15 +64,12 @@ import {{className}} from './{{className}}.vue'
         name: '{{namePascalCase}}',
         components:{
             {{#queryParameters}}
-            {{#if (isPrimitive className)}}
+            {{#if (isPrimitiveComponent className)}}
             {{getPrimitiveType className}},
             {{else}}
             {{#checkVO className}}
             {{className}},
             {{/checkVO}}
-            {{#checkEntityMember className}}
-            {{className}},
-            {{/checkEntityMember}}
             {{#checkListOfEntityMember className}}
             {{/checkListOfEntityMember}}
             {{/if}}
@@ -113,6 +107,9 @@ import {{className}} from './{{className}}.vue'
 
 
 <function>
+    var importList = []
+    var componentList = []
+
 //if(this.queryParameters!=null) alert(this.queryParameters)
     window.$HandleBars.registerHelper('ifNotNull', function (displayName, name) {
         if(displayName){
@@ -124,7 +121,6 @@ import {{className}} from './{{className}}.vue'
     window.$HandleBars.registerHelper('print', function (value) {
         console.log(value)
     });
-
     window.$HandleBars.registerHelper('classType', function (type, options) {
         if(type.endsWith('Class')){
             return true;
@@ -132,7 +128,6 @@ import {{className}} from './{{className}}.vue'
             return false;
         }
     })
-
     window.$HandleBars.registerHelper('checkCommandPut', function (info, options) {
         if(info.endsWith('PUT')){
             return options.fn(this);
@@ -140,7 +135,6 @@ import {{className}} from './{{className}}.vue'
             options.inverse(this);
         }
     })
-
     window.$HandleBars.registerHelper('checkCommandDelete', function (info, options) {
         if(info.endsWith('DELETE')){
             return options.fn(this);
@@ -148,7 +142,6 @@ import {{className}} from './{{className}}.vue'
             options.inverse(this);
         }
     })
-
     window.$HandleBars.registerHelper('checkCommandPost', function (info, options) {
         if(info.endsWith('POST')) {
             return options.fn(this);
@@ -156,7 +149,6 @@ import {{className}} from './{{className}}.vue'
             options.inverse(this);
         }
     })
-
     window.$HandleBars.registerHelper('isNotId', function (className) {
         return (className != 'id')
     })
@@ -166,6 +158,34 @@ import {{className}} from './{{className}}.vue'
                 || className == "Boolean" || className == "Date"){
             return true;
         } else {
+            return false;
+        }
+    })
+
+    window.$HandleBars.registerHelper('isPrimitiveImport', function (className) {
+        if(!importList.includes(className)){
+            importList.push(className)
+            if(className.includes("String") || className.includes("Integer") || className.includes("Long") || className.includes("Double") || className.includes("Float")
+                || className.includes("Boolean") || className.includes("Date")){
+                return true;
+            } else {
+                return false;
+            }
+        }else{
+            return false;
+        }
+    })
+
+    window.$HandleBars.registerHelper('isPrimitiveComponent', function (className) {
+        if(!componentList.includes(className)){
+            componentList.push(className)
+            if(className.includes("String") || className.includes("Integer") || className.includes("Long") || className.includes("Double") || className.includes("Float")
+                || className.includes("Boolean") || className.includes("Date")){
+                return true;
+            } else {
+                return false;
+            }
+        }else{
             return false;
         }
     })
@@ -214,7 +234,7 @@ import {{className}} from './{{className}}.vue'
         }
         return "NO-CLASS";
     })
-
+    
     window.$HandleBars.registerHelper('setDefaultValue', function (className) {
         if(className.endsWith("String")) {
             return "''";
