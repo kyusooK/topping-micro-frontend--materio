@@ -13,15 +13,17 @@ path: microfrontend-home
     "serve:standalone": "vue-cli-service serve --mode standalone --port 9090"
   },
   "dependencies": {
+    "axios": "^1.6.2",
     "core-js": "^3.6.5",
     "keycloak-js": "^22.0.1",
     "polished": "^4.2.2",
     "single-spa-vue": "^2.1.0",
-    "vue": "^2.6.11",
+    "vue": "^3.2.37",
     "vue-router": "^3.4.3",
-    "vuetify": "^3.3.23"
+    "webfontloader": "^1.6.28"
   },
   "devDependencies": {
+    "@iconify/vue": "^4.1.1",
     "@vue/cli-plugin-babel": "~4.5.15",
     "@vue/cli-plugin-eslint": "~4.5.15",
     "@vue/cli-plugin-router": "~4.5.15",
@@ -32,9 +34,7 @@ path: microfrontend-home
     "sass": "~1.32.0",
     "sass-loader": "^10.1.0",
     "vue-cli-plugin-single-spa": "^2.0.0",
-    "vue-cli-plugin-vuetify": "~2.4.7",
     "vue-loader": "^17.0.1",
     "vue-template-compiler": "^2.6.11",
-    "vuetify-loader": "^1.7.0"
   }
 }

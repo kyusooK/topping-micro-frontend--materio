@@ -2,10 +2,11 @@ forEach: Model
 fileName: router.js
 path: microfrontend-home/src
 ---
-import Vue from 'vue'
+import { createApp } from 'vue';
 import Router from 'vue-router'
 
-Vue.use(Router);
+const app = createApp({});
+app.use(Router);
 
 import Home from './components/Home'
 
@@ -20,3 +21,4 @@ export default new Router({
         },
     ]
 })
+
